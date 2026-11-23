@@ -19,4 +19,9 @@ class MainWindow(QMainWindow):
 
         self.table = QTableWidget(50, 30)
         self.table.setHorizontalHeaderLabels(["Student Id", "Original Grade", "Corrected Grade"])
+
+        self.select_button = QPushButton("Select File")
+        self.update_button = QPushButton("Update fixed grades")
+        self.about_button = QPushButton("About")
+
         
