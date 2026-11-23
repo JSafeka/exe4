@@ -128,6 +128,15 @@ class MainWindow(QMainWindow):
             self.axes.set_ylabel("Ice Cream Profits ($)")
             self.axes.spines["top"].set_visible(False)
             self.axes.spines["right"].set_visible(False)
+
+            max_rev = max(self.revenues)
+            min_rev = min(self.revenues)
+            avg_temp = sum(self.temperatures) / len(self.temperatures)
+
+            self.max_rev_label.setText(f"Max Revenue: ${max_rev:.1f}")
+            self.min_rev_label.setText(f"Min Revenue: ${min_rev:.1f}")
+            self.avg_temp_label.setText(f"Avg Temp: {avg_temp:.1f}°C")
+
         self.canvas.draw()
 
     def open_about(self):
