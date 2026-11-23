@@ -1,9 +1,9 @@
 import sys
-from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QLineEdit, QPushButton, QTableWidget, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QLineEdit, QPushButton, QTableWidget, QVBoxLayout, QSpinBox
 
 class MainWindow(QMainWindow):
     def __init__(self):
-        super().__init()
+        super().__init__    ()
 
         self.student_id = []
         self.original_grades = []
@@ -24,4 +24,6 @@ class MainWindow(QMainWindow):
         self.update_button = QPushButton("Update fixed grades")
         self.about_button = QPushButton("About")
 
-        
+        self.bonus_input = QSpinBox()
+        self.bonus_input.setRange(0, 100)
+        self.bonus_input.lineEdit.returnPressed.connect(self.update_bonus)
