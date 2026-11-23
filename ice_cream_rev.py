@@ -72,10 +72,13 @@ class MainWindow(QMainWindow):
 
     def draw_graph(self):
         self.axes.clear()
-        x = range(100)
-        y = [math.sin(val / 10) for val in x]
-        self.axes.plot(x, y)
-        self.axes.set_title("Temporary Graph")
+        if self.temperatures:
+            self.axes.scatter(self.temperatures, self.revenues, s=1)
+            self.axes.set_title("Ice Cream Profits vs. Temperature")
+            self.axes.set_xlabel("Temperature (°C)")
+            self.axes.set_ylabel("Ice Cream Profits ($)")
+            self.axes.spines["top"].set_visible(False)
+            self.axes.spines["right"].set_visible(False)
         self.canvas.draw()
 
     def open_about(self):
