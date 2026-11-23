@@ -41,43 +41,49 @@ class MainWindow(QMainWindow):
         main_layout.addLayout(control_layout)
 
 
-# AI generated method for updating the table! 
-def load_file(self):
-        file_name, _ = QFileDialog.getOpenFileName(
-            self, "Select Grades File", "", "CSV Files (*.csv)"
-        )
-        if file_name:
-            self.selected_file = file_name
-            self.student_ids = []
-            self.original_grades = []
-            self.corrected_grades = []
+    # AI generated method for updating the table! 
+    def load_file(self):
+            file_name, _ = QFileDialog.getOpenFileName(
+                self, "Select Grades File", "", "CSV Files (*.csv)"
+            )
+            if file_name:
+                self.selected_file = file_name
+                self.student_ids = []
+                self.original_grades = []
+                self.corrected_grades = []
 
-            with open(file_name, "r", encoding="utf-8") as f:
-                next(f)  # Skip header row
-                for line in f:
-                    parts = line.strip().split(",")
-                    student_id = parts[0]
-                    grade = int(parts[1])
-                    self.student_ids.append(student_id)
-                    self.original_grades.append(grade)
-                    self.corrected_grades.append(grade)
+                with open(file_name, "r", encoding="utf-8") as f:
+                    next(f)  # Skip header row
+                    for line in f:
+                        parts = line.strip().split(",")
+                        student_id = parts[0]
+                        grade = int(parts[1])
+                        self.student_ids.append(student_id)
+                        self.original_grades.append(grade)
+                        self.corrected_grades.append(grade)
 
-            self.update_table()
-            
-# AI generated method for updating the table! 
-def update_table(self):
-    self.table.setRowCount(len(self.student_ids))
-    for row, (s_id, orig, corr) in enumerate(
-        zip(self.student_ids, self.original_grades, self.corrected_grades)
-        ):
-        self.table.setItem(row, 0, QTableWidgetItem(str(s_id)))
-        self.table.setItem(row, 1, QTableWidgetItem(str(orig)))
-        self.table.setItem(row, 2, QTableWidgetItem(str(corr)))
-
+                self.update_table()
+                
+    # AI generated method for updating the table! 
+    def update_table(self):
+        self.table.setRowCount(len(self.student_ids))
+        for row, (s_id, orig, corr) in enumerate(
+            zip(self.student_ids, self.original_grades, self.corrected_grades)
+            ):
+            self.table.setItem(row, 0, QTableWidgetItem(str(s_id)))
+            self.table.setItem(row, 1, QTableWidgetItem(str(orig)))
+            self.table.setItem(row, 2, QTableWidgetItem(str(corr)))
 
 
     def update_bonus(self):
-        pass
+        bonus = self.bonus_input.value()
+        self.corrected_grades = []
+        for origin in self.original_grades:
+            new_grade = origin + bonus
+            if new_grade > 100:
+                new_grade = 100
+            self.corrected_grades.append(new_grade)
+        self.update_table()
 
 
 
