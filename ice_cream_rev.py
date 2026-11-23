@@ -52,9 +52,22 @@ class MainWindow(QMainWindow):
 
         self.draw_graph()
 
+    def load_file(self):
+            pass
 
+    def draw_graph(self):
+        self.axes.clear()
+        x = range(100)
+        y = [math.sin(val / 10) for val in x]
+        self.axes.plot(x, y)
+        self.axes.set_title("Temporary Graph")
+        self.canvas.draw()
 
-def main() -> None:
+    def open_about(self):
+        self.about_window = About()
+        self.about_window.show()
+
+def main():
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
