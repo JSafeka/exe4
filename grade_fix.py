@@ -17,8 +17,11 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(center_widg)
         main_layout = QVBoxLayout(center_widg)
 
-        self.table = QTableWidget(50, 30)
+        self.table = QTableWidget(50, 3)
         self.table.setHorizontalHeaderLabels(["Student Id", "Original Grade", "Corrected Grade"])
+        main_layout.addWidget(self.table)
+
+        control_layout = QHBoxLayout()
 
         self.select_button = QPushButton("Select File")
         self.update_button = QPushButton("Update fixed grades")
@@ -27,3 +30,25 @@ class MainWindow(QMainWindow):
         self.bonus_input = QSpinBox()
         self.bonus_input.setRange(0, 100)
         self.bonus_input.lineEdit.returnPressed.connect(self.update_bonus)
+
+        control_layout.addWidget(self.select_button)
+        control_layout.addWidget(self.update_button)
+        control_layout.addWidget(self.about_button)
+        control_layout.addWidget(self.bonus_input)
+        control_layout.addWidget(QLabel("Bonus:"))
+
+        main_layout.addLayout(control_layout)
+
+
+
+
+
+def main():
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
