@@ -1,4 +1,6 @@
 import sys
+import os
+import subprocess
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QLineEdit, QPushButton, QTableWidget, QVBoxLayout, QSpinBox, QFileDialog, QTableWidgetItem
 
 class MainWindow(QMainWindow):
@@ -27,6 +29,7 @@ class MainWindow(QMainWindow):
         self.update_button = QPushButton("Update fixed grades")
         self.about_button = QPushButton("About")
         self.select_button.clicked.connect(self.load_file)
+        self.update_button.clicked.connect(self.update_file)
 
         self.bonus_input = QSpinBox()
         self.bonus_input.setRange(0, 100)
@@ -74,7 +77,6 @@ class MainWindow(QMainWindow):
             self.table.setItem(row, 1, QTableWidgetItem(str(orig)))
             self.table.setItem(row, 2, QTableWidgetItem(str(corr)))
 
-
     def update_bonus(self):
         bonus = self.bonus_input.value()
         self.corrected_grades = []
@@ -85,6 +87,25 @@ class MainWindow(QMainWindow):
             self.corrected_grades.append(new_grade)
         self.update_table()
 
+    # AI generated method for updating the table!         
+    def update_file(self):
+        if not self.selected_file:
+            return
+
+        with open(self.selected_file, "r", encoding="utf-8") as f:
+            header = f.readline()
+
+        with open(self.selected_file, "w", encoding="utf-8") as f:
+            f.write(header)
+            for s_id, corr in zip(self.student_ids, self.corrected_grades):
+                f.write(f"{s_id},{corr}\n")
+
+        if sys.platform == "win32":
+            os.startfile(self.selected_file)
+        elif sys.platform == "darwin":
+            subprocess.run(["open", self.selected_file])
+        else:
+            subprocess.run(["xdg-open", self.selected_file])
 
 
 def main():
