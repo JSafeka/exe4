@@ -39,6 +39,21 @@ class MainWindow(QMainWindow):
         main_layout.addWidget(self.toolbar)
         main_layout.addWidget(self.canvas)
 
+        controls_layout = QHBoxLayout()
+        self.select_button = QPushButton("Select File")
+        self.about_button = QPushButton("About")
+        self.select_button.clicked.connect(self.load_file)
+        self.about_button.clicked.connect(self.open_about)
+
+        controls_layout.addWidget(self.select_button)
+        controls_layout.addStretch()
+        controls_layout.addWidget(self.about_button)
+        main_layout.addLayout(controls_layout)
+
+        self.draw_graph()
+
+
+
 def main() -> None:
     app = QApplication(sys.argv)
     window = MainWindow()
