@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QWidget,
+    QLabel
 )
 from About import About
 
@@ -37,8 +38,40 @@ class MainWindow(QMainWindow):
         self.toolbar = NavigationToolbar2QT(self.canvas, self)
         self.axes = self.figure.add_subplot(111)
 
-        main_layout.addWidget(self.toolbar)
-        main_layout.addWidget(self.canvas)
+        # Bonus feature (Ai assisted)
+        content_layout = QHBoxLayout()
+        content_layout.setSpacing(14)
+
+        graph_container = QWidget()
+        graph_layout = QVBoxLayout(graph_container)
+        graph_layout.setContentsMargins(0, 0, 0, 0)
+        graph_layout.addWidget(self.toolbar)
+        graph_layout.addWidget(self.canvas)
+        content_layout.addWidget(graph_container, stretch=3)
+
+        stats_card = QWidget()
+        stats_card.setObjectName("statsCard")
+        stats_layout = QVBoxLayout(stats_card)
+        stats_layout.setContentsMargins(16, 16, 16, 16)
+        stats_layout.setSpacing(10)
+
+        stats_title = QLabel("Data Summary")
+        stats_title.setObjectName("statsTitle")
+        self.max_rev_label = QLabel("Max Revenue: --")
+        self.max_rev_label.setObjectName("averageValue")
+        self.min_rev_label = QLabel("Min Revenue: --")
+        self.min_rev_label.setObjectName("averageValue")
+        self.avg_temp_label = QLabel("Avg Temp: --")
+        self.avg_temp_label.setObjectName("averageValue")
+
+        stats_layout.addWidget(stats_title)
+        stats_layout.addWidget(self.max_rev_label)
+        stats_layout.addWidget(self.min_rev_label)
+        stats_layout.addWidget(self.avg_temp_label)
+        stats_layout.addStretch()
+
+        content_layout.addWidget(stats_card, stretch=1)
+        main_layout.addLayout(content_layout)
 
         controls_layout = QHBoxLayout()
         self.select_button = QPushButton("Select File")
