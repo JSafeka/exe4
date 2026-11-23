@@ -31,6 +31,14 @@ class MainWindow(QMainWindow):
 
         main_layout = QVBoxLayout(central_widget)
 
+        self.figure = Figure()
+        self.canvas = FigureCanvasQTAgg(self.figure)
+        self.toolbar = NavigationToolbar2QT(self.canvas, self)
+        self.axes = self.figure.add_subplot(111)
+
+        main_layout.addWidget(self.toolbar)
+        main_layout.addWidget(self.canvas)
+
 def main() -> None:
     app = QApplication(sys.argv)
     window = MainWindow()
