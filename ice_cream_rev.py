@@ -1,6 +1,7 @@
 import sys
 import os
 import math
+import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from PySide6.QtWidgets import (
@@ -74,6 +75,21 @@ class MainWindow(QMainWindow):
         self.axes.clear()
         if self.temperatures:
             self.axes.scatter(self.temperatures, self.revenues, s=1)
+            m, b = np.polyfit(self.temperatures, self.revenues, 1)
+            y_line = [m * x + b for x in self.temperatures]
+            self.axes.plot(self.temperatures, y_line, color="red", linewidth=1.5)
+
+            equation_text = f"y = {m:.2f}x + {b:.2f}"
+            self.axes.text(
+                0.05,
+                0.92,
+                equation_text,
+                transform=self.axes.transAxes,
+                color="red",
+                fontsize=11,
+                fontweight="bold",
+            )
+
             self.axes.set_title("Ice Cream Profits vs. Temperature")
             self.axes.set_xlabel("Temperature (°C)")
             self.axes.set_ylabel("Ice Cream Profits ($)")
