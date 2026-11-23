@@ -31,6 +31,33 @@ QWidget#controlCard {
     border-radius: 14px;
 }
 
+QWidget#statsCard {
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 14px;
+    min-width: 190px;
+    max-width: 220px;
+}
+
+QLabel#statsTitle {
+    color: #f9fafb;
+    font-size: 15px;
+    font-weight: 700;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #374151;
+}
+
+QLabel#averageValue {
+    background: #111827;
+    color: #dbeafe;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    min-height: 48px;
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
 QTableWidget#gradesTable {
     background: #1f2937;
     alternate-background-color: #182230;
@@ -40,6 +67,10 @@ QTableWidget#gradesTable {
     selection-background-color: #1d4ed8;
     selection-color: #ffffff;
     outline: none;
+}
+
+QTableWidget#gradesTable {
+    font-size: 13px;
 }
 
 QTableWidget#gradesTable::item {
@@ -74,6 +105,12 @@ QPushButton {
     border-radius: 9px;
     font-size: 13px;
     font-weight: 700;
+}
+
+QPushButton#primaryButton,
+QPushButton#successButton,
+QPushButton#secondaryButton {
+    min-width: 112px;
 }
 
 QPushButton#primaryButton {

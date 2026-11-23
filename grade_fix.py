@@ -10,14 +10,14 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__    ()
 
-        self.student_id = []
+        self.student_ids = []
         self.original_grades = []
         self.corrected_grades = []
         self.selected_file = ""
 
         self.setWindowTitle("Grade Correction")
-        self.setMinimumSize(760, 620)
-        self.setGeometry(500, 300, 760, 620)
+        self.setMinimumSize(860, 620)
+        self.setGeometry(500, 300, 860, 620)
 
         center_widg = QWidget(self)
         center_widg.setObjectName("centralWidget")
@@ -43,7 +43,32 @@ class MainWindow(QMainWindow):
         self.table.setColumnWidth(0, 220)
         self.table.setColumnWidth(1, 220)
         self.table.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
-        main_layout.addWidget(self.table)
+
+        # Bonus: average calculation (Ai assisted)
+        content_layout = QHBoxLayout()
+        content_layout.setSpacing(14)
+        content_layout.addWidget(self.table, stretch=3)
+
+        stats_card = QWidget()
+        stats_card.setObjectName("statsCard")
+        stats_layout = QVBoxLayout(stats_card)
+        stats_layout.setContentsMargins(16, 16, 16, 16)
+        stats_layout.setSpacing(10)
+
+        stats_title = QLabel("Class Averages")
+        stats_title.setObjectName("statsTitle")
+        self.orig_avg_label = QLabel("Original: --")
+        self.orig_avg_label.setObjectName("averageValue")
+        self.corr_avg_label = QLabel("Corrected: --")
+        self.corr_avg_label.setObjectName("averageValue")
+
+        stats_layout.addWidget(stats_title)
+        stats_layout.addWidget(self.orig_avg_label)
+        stats_layout.addWidget(self.corr_avg_label)
+        stats_layout.addStretch()
+
+        content_layout.addWidget(stats_card, stretch=1)
+        main_layout.addLayout(content_layout)
 
         control_card = QWidget()
         control_card.setObjectName("controlCard")
@@ -109,10 +134,19 @@ class MainWindow(QMainWindow):
         self.table.setRowCount(len(self.student_ids))
         for row, (s_id, orig, corr) in enumerate(
             zip(self.student_ids, self.original_grades, self.corrected_grades)
-            ):
+        ):
             self.table.setItem(row, 0, QTableWidgetItem(str(s_id)))
             self.table.setItem(row, 1, QTableWidgetItem(str(orig)))
             self.table.setItem(row, 2, QTableWidgetItem(str(corr)))
+
+        if self.original_grades:
+            orig_avg = sum(self.original_grades) / len(self.original_grades)
+            corr_avg = sum(self.corrected_grades) / len(self.corrected_grades)
+            self.orig_avg_label.setText(f"Original: {orig_avg:.1f}")
+            self.corr_avg_label.setText(f"Corrected: {corr_avg:.1f}")
+        else:
+            self.orig_avg_label.setText("Original: --")
+            self.corr_avg_label.setText("Corrected: --")
 
     def update_bonus(self, _value=None):
         if not hasattr(self, "student_ids") or not self.original_grades:
