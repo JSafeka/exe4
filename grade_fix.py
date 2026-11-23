@@ -1,6 +1,7 @@
 import sys
 import os
 import subprocess
+from About import About
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget, QHBoxLayout, QLineEdit, QPushButton, QTableWidget, QVBoxLayout, QSpinBox, QFileDialog, QTableWidgetItem
 
 class MainWindow(QMainWindow):
@@ -30,6 +31,7 @@ class MainWindow(QMainWindow):
         self.about_button = QPushButton("About")
         self.select_button.clicked.connect(self.load_file)
         self.update_button.clicked.connect(self.update_file)
+        self.about_button.clicked.connect(self.open_about)
 
         self.bonus_input = QSpinBox()
         self.bonus_input.setRange(0, 100)
@@ -107,6 +109,9 @@ class MainWindow(QMainWindow):
         else:
             subprocess.run(["xdg-open", self.selected_file])
 
+    def open_about(self):
+        self.about_window = About()
+        self.about_window.show()
 
 def main():
     app = QApplication(sys.argv)
