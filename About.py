@@ -11,6 +11,9 @@ class About(QWidget):
         pixmap = QPixmap("pic.png")
         self.pic_label.setPixmap(pixmap)
 
+        self.github_label = QLabel('<a href="https://github.com/JSafeka/exe4.git">GitHub Repository</a>')
+        self.github_label.setOpenExternalLinks(True)
+
         self.name_label = QLabel("Jonathan Samia")
         self.email_label = QLabel("jonatan.samia@s.afeka.ac.il")
         self.game_label = QLabel('<a href="https://ageofwargame.io/">Age of War</a>')
@@ -22,6 +25,7 @@ class About(QWidget):
         layout.addWidget(self.name_label)
         layout.addWidget(self.email_label)
         layout.addWidget(self.game_label)
+        layout.addWidget(self.github_label)
         self.setLayout(layout)
 
 
