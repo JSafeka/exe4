@@ -12,4 +12,11 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Grade Correction")
         self.setGeometry(500, 300, 700, 600)
+
+        center_widg = QWidget(self)
+        self.setCentralWidget(center_widg)
+        main_layout = QVBoxLayout(center_widg)
+
+        self.table = QTableWidget(50, 30)
+        self.table.setHorizontalHeaderLabels(["Student Id", "Original Grade", "Corrected Grade"])
         
