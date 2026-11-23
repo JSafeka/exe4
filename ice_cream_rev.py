@@ -53,7 +53,22 @@ class MainWindow(QMainWindow):
         self.draw_graph()
 
     def load_file(self):
-            pass
+        file_name, _ = QFileDialog.getOpenFileName(
+            self, "Select Ice Cream File", "", "CSV Files (*.csv)"
+        )
+        if file_name:
+            self.selected_file = file_name
+            self.temperatures = []
+            self.revenues = []
+
+            with open(file_name, "r", encoding="utf-8") as f:
+                next(f)
+                for line in f:
+                    parts = line.strip().split(",")
+                    self.temperatures.append(float(parts[0]))
+                    self.revenues.append(float(parts[1]))
+
+            self.draw_graph()
 
     def draw_graph(self):
         self.axes.clear()
